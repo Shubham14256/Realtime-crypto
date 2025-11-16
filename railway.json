@@ -1,0 +1,13 @@
+{
+  "projectName": "Realtime-Crypto",
+  "services": [
+    {
+      "name": "backend",
+      "startCommand": "uvicorn main:app --host 0.0.0.0 --port $PORT",
+      "environmentVariables": {
+        "PORT": "8000",
+        "PYTHONUNBUFFERED": "1"
+      }
+    }
+  ]
+}
