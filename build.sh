@@ -4,10 +4,10 @@ set -e
 echo "Installing Python dependencies..."
 pip install -r requirements.txt
 
-echo "Installing Node dependencies..."
+echo "Installing Node dependencies and building frontend..."
 cd frontend
-npm install
+npm install --production
 npm run build
 cd ..
 
-echo "Deployment complete!"
+echo "Build completed successfully!"
