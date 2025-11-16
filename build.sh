@@ -10,4 +10,5 @@ npm install --production
 npm run build
 cd ..
 
-echo "Build completed successfully!"
+echo "Starting server..."
+exec uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000}
