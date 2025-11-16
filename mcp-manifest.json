@@ -1,0 +1,312 @@
+{
+  "mcp_version": "1.0.0",
+  "service": {
+    "name": "Cryptocurrency Data Server",
+    "description": "Real-time cryptocurrency data and historical OHLCV information with WebSocket streaming",
+    "version": "1.0.0",
+    "author": "Crypto Server Team",
+    "base_url": "http://127.0.0.1:8000",
+    "documentation_url": "http://127.0.0.1:8000/docs",
+    "health_check_url": "/health"
+  },
+  "endpoints": [
+    {
+      "id": "get_price",
+      "name": "Get Current Price",
+      "description": "Fetch current cryptocurrency price from Binance exchange",
+      "method": "GET",
+      "path": "/price/{symbol}",
+      "parameters": {
+        "symbol": {
+          "type": "string",
+          "required": true,
+          "description": "Trading pair symbol in CCXT format (e.g., BTC/USDT, ETH/USDT)",
+          "examples": ["BTC/USDT", "ETH/USDT", "XRP/USDT"]
+        }
+      },
+      "response": {
+        "type": "object",
+        "properties": {
+          "symbol": {
+            "type": "string",
+            "description": "The trading pair symbol"
+          },
+          "price": {
+            "type": "number",
+            "description": "Current price in USDT"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Response timestamp in ISO 8601 format"
+          },
+          "high": {
+            "type": "number",
+            "description": "24-hour high price"
+          },
+          "low": {
+            "type": "number",
+            "description": "24-hour low price"
+          },
+          "volume": {
+            "type": "number",
+            "description": "24-hour trading volume"
+          }
+        }
+      },
+      "status_codes": {
+        "200": "Success",
+        "400": "Invalid symbol format",
+        "404": "Symbol not found",
+        "502": "Network error",
+        "503": "Exchange service unavailable"
+      },
+      "use_cases": [
+        "Real-time price monitoring",
+        "Trading decisions",
+        "Price comparison",
+        "Market analysis"
+      ]
+    },
+    {
+      "id": "get_history",
+      "name": "Get Historical OHLCV Data",
+      "description": "Fetch historical candlestick data for a cryptocurrency symbol",
+      "method": "GET",
+      "path": "/history/{symbol}",
+      "parameters": {
+        "symbol": {
+          "type": "string",
+          "required": true,
+          "description": "Trading pair symbol (e.g., BTC/USDT)"
+        },
+        "days": {
+          "type": "integer",
+          "required": false,
+          "default": 30,
+          "minimum": 1,
+          "maximum": 365,
+          "description": "Number of days of historical data to retrieve"
+        }
+      },
+      "response": {
+        "type": "object",
+        "properties": {
+          "symbol": {
+            "type": "string",
+            "description": "The trading pair symbol"
+          },
+          "data": {
+            "type": "array",
+            "description": "Array of OHLCV candles [timestamp, open, high, low, close, volume]",
+            "items": {
+              "type": "array",
+              "minItems": 6,
+              "items": {
+                "type": "number"
+              }
+            }
+          },
+          "count": {
+            "type": "integer",
+            "description": "Number of candles returned"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Response timestamp"
+          }
+        }
+      },
+      "status_codes": {
+        "200": "Success",
+        "400": "Invalid parameters",
+        "404": "Symbol not found",
+        "502": "Network error",
+        "503": "Exchange service unavailable"
+      },
+      "use_cases": [
+        "Technical analysis",
+        "Backtesting trading strategies",
+        "Price trend analysis",
+        "Historical comparisons",
+        "Data export"
+      ]
+    },
+    {
+      "id": "websocket_updates",
+      "name": "Real-Time Price Updates (WebSocket)",
+      "description": "Stream real-time price updates for a cryptocurrency symbol via WebSocket",
+      "method": "WS",
+      "path": "/ws/updates/{symbol}",
+      "parameters": {
+        "symbol": {
+          "type": "string",
+          "required": true,
+          "description": "Trading pair symbol for streaming"
+        }
+      },
+      "message_format": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["price_update", "error"],
+            "description": "Message type"
+          },
+          "symbol": {
+            "type": "string",
+            "description": "Trading pair symbol"
+          },
+          "price": {
+            "type": "number",
+            "description": "Current price"
+          },
+          "high": {
+            "type": "number",
+            "description": "24-hour high"
+          },
+          "low": {
+            "type": "number",
+            "description": "24-hour low"
+          },
+          "volume": {
+            "type": "number",
+            "description": "24-hour volume"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Update timestamp"
+          }
+        }
+      },
+      "update_frequency": "5 seconds",
+      "status_codes": {
+        "101": "WebSocket upgrade successful",
+        "1008": "Invalid symbol format",
+        "1011": "Server error"
+      },
+      "use_cases": [
+        "Live price monitoring dashboards",
+        "Real-time trading alerts",
+        "Live data visualization",
+        "Price alerts and notifications"
+      ]
+    },
+    {
+      "id": "health_check",
+      "name": "Health Check",
+      "description": "Check if the service is healthy and exchange is connected",
+      "method": "GET",
+      "path": "/health",
+      "parameters": {},
+      "response": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["healthy", "degraded", "unhealthy"],
+            "description": "Service health status"
+          },
+          "exchange": {
+            "type": "string",
+            "enum": ["connected", "disconnected"],
+            "description": "Exchange connection status"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Check timestamp"
+          }
+        }
+      },
+      "status_codes": {
+        "200": "Service is healthy"
+      },
+      "use_cases": [
+        "Service availability monitoring",
+        "Load balancer health checks",
+        "Dependency validation"
+      ]
+    },
+    {
+      "id": "cache_stats",
+      "name": "Cache Statistics",
+      "description": "Get current cache usage statistics",
+      "method": "GET",
+      "path": "/cache-stats",
+      "parameters": {},
+      "response": {
+        "type": "object",
+        "properties": {
+          "cache_size": {
+            "type": "integer",
+            "description": "Number of items currently in cache"
+          },
+          "max_size": {
+            "type": "integer",
+            "description": "Maximum cache capacity"
+          },
+          "ttl": {
+            "type": "integer",
+            "description": "Time-to-live in seconds"
+          },
+          "items": {
+            "type": "array",
+            "description": "List of cache keys",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "use_cases": [
+        "Cache performance monitoring",
+        "Debugging cache issues",
+        "Performance optimization"
+      ]
+    }
+  ],
+  "authentication": {
+    "type": "none",
+    "description": "No authentication required for this version"
+  },
+  "rate_limiting": {
+    "enabled": false,
+    "description": "Rate limiting is managed by the Binance exchange"
+  },
+  "caching": {
+    "enabled": true,
+    "ttl_seconds": 300,
+    "strategy": "TTL-based expiration",
+    "max_items": 100
+  },
+  "error_handling": {
+    "validation_errors": 400,
+    "not_found": 404,
+    "network_errors": 502,
+    "service_unavailable": 503,
+    "internal_errors": 500
+  },
+  "supported_symbols": {
+    "source": "Binance exchange",
+    "format": "CCXT format (e.g., BTC/USDT)",
+    "count": "200+",
+    "examples": [
+      "BTC/USDT",
+      "ETH/USDT",
+      "BNB/USDT",
+      "XRP/USDT",
+      "SOL/USDT"
+    ]
+  },
+  "capabilities": {
+    "real_time": true,
+    "historical_data": true,
+    "websocket_streaming": true,
+    "caching": true,
+    "error_handling": true,
+    "health_monitoring": true
+  }
+}

@@ -1,0 +1,128 @@
+.price-card {
+  background: linear-gradient(135deg, rgba(48, 43, 99, 0.5), rgba(36, 36, 62, 0.5));
+  border: 2px solid rgba(76, 175, 80, 0.3);
+  border-radius: 12px;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.price-card:hover {
+  border-color: rgba(76, 175, 80, 0.6);
+  box-shadow: 0 8px 16px rgba(76, 175, 80, 0.2);
+  transform: translateY(-5px);
+}
+
+.price-card.selected {
+  border-color: #4CAF50;
+  background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(76, 175, 80, 0.05));
+  box-shadow: 0 0 20px rgba(76, 175, 80, 0.3);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(76, 175, 80, 0.2);
+}
+
+.card-header h3 {
+  margin: 0;
+  font-size: 1.3em;
+  color: #4CAF50;
+}
+
+.badge {
+  background: #4CAF50;
+  color: #0f0c29;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8em;
+  font-weight: bold;
+}
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.price-display {
+  text-align: center;
+  padding: 15px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+}
+
+.price {
+  font-size: 2em;
+  font-weight: bold;
+  color: #4CAF50;
+  display: block;
+}
+
+.price-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  border-left: 2px solid #4CAF50;
+}
+
+.stat .label {
+  font-size: 0.8em;
+  color: #90caf9;
+  text-transform: uppercase;
+}
+
+.stat .value {
+  font-size: 1.1em;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.timestamp {
+  font-size: 0.8em;
+  color: #90caf9;
+  text-align: center;
+}
+
+.no-data {
+  text-align: center;
+  color: #90caf9;
+  padding: 20px;
+}
+
+.loading-skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.skeleton-line {
+  height: 20px;
+  background: linear-gradient(90deg, rgba(76, 175, 80, 0.1), rgba(76, 175, 80, 0.3), rgba(76, 175, 80, 0.1));
+  background-size: 200% 100%;
+  border-radius: 4px;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}

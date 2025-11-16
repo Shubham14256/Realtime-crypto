@@ -1,0 +1,236 @@
+.App {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+  color: #ffffff;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Header */
+.App-header {
+  background: linear-gradient(135deg, rgba(15, 12, 41, 0.9), rgba(48, 43, 99, 0.9));
+  padding: 40px 20px;
+  border-bottom: 2px solid rgba(76, 175, 80, 0.5);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.header-content h1 {
+  margin: 0;
+  font-size: 2.5em;
+  background: linear-gradient(135deg, #4CAF50, #45a049);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: bold;
+}
+
+.header-content .subtitle {
+  margin: 5px 0 0 0;
+  color: #b0bec5;
+  font-size: 0.95em;
+}
+
+/* Main Content */
+.App-main {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+/* Error Banner */
+.error-banner {
+  background: linear-gradient(135deg, #c62828, #ad1457);
+  padding: 15px 20px;
+  border-radius: 8px;
+  color: white;
+  font-weight: 500;
+  box-shadow: 0 4px 8px rgba(198, 40, 40, 0.3);
+}
+
+/* Price Cards Section */
+.price-cards-section h2 {
+  margin: 0 0 20px 0;
+  font-size: 1.8em;
+  color: #4CAF50;
+}
+
+.price-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+/* Charts Section */
+.charts-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.chart-container {
+  display: contents;
+}
+
+.chart {
+  background: rgba(48, 43, 99, 0.6);
+  border: 1px solid rgba(76, 175, 80, 0.3);
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.chart:hover {
+  border-color: rgba(76, 175, 80, 0.6);
+  box-shadow: 0 12px 24px rgba(76, 175, 80, 0.2);
+  transform: translateY(-5px);
+}
+
+.chart h3 {
+  margin: 0 0 15px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.ws-indicator {
+  font-size: 0.8em;
+  background: rgba(76, 175, 80, 0.2);
+  padding: 4px 12px;
+  border-radius: 20px;
+  color: #4CAF50;
+  font-weight: bold;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+/* Details Section */
+.details-section {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+.detail-card {
+  background: rgba(48, 43, 99, 0.6);
+  border: 1px solid rgba(76, 175, 80, 0.3);
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.detail-card h3 {
+  margin: 0 0 20px 0;
+  color: #4CAF50;
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  border-left: 3px solid #4CAF50;
+}
+
+.detail-item .label {
+  font-size: 0.85em;
+  color: #90caf9;
+  font-weight: 500;
+}
+
+.detail-item .value {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.detail-item .value.connected {
+  color: #4CAF50;
+}
+
+.detail-item .value.disconnected {
+  color: #ff6b6b;
+}
+
+/* Footer */
+.App-footer {
+  background: rgba(15, 12, 41, 0.9);
+  padding: 30px 20px;
+  text-align: center;
+  border-top: 2px solid rgba(76, 175, 80, 0.5);
+  margin-top: 40px;
+}
+
+.App-footer p {
+  margin: 5px 0;
+  color: #b0bec5;
+  font-size: 0.95em;
+}
+
+.App-footer a {
+  color: #4CAF50;
+  text-decoration: none;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.App-footer a:hover {
+  color: #45a049;
+  text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .charts-section {
+    grid-template-columns: 1fr;
+  }
+
+  .App-header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .header-content h1 {
+    font-size: 2em;
+  }
+}
+
+@media (max-width: 768px) {
+  .App-main {
+    padding: 20px 10px;
+    gap: 20px;
+  }
+
+  .price-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .detail-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .chart {
+    padding: 15px;
+  }
+}
